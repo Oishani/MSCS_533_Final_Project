@@ -1,14 +1,12 @@
-﻿namespace GeoHeatmap;
+﻿using Microsoft.Maui.Controls;
+
+namespace GeoHeatmap;
 
 public partial class App : Application
 {
-	public App()
-	{
-		InitializeComponent();
-	}
-
-	protected override Window CreateWindow(IActivationState? activationState)
-	{
-		return new Window(new AppShell());
-	}
+    public App(MapPage mapPage)
+    {
+        InitializeComponent();
+        MainPage = new NavigationPage(mapPage);
+    }
 }

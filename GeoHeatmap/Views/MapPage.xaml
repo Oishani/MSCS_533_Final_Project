@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Maui;assembly=SkiaSharp.Views.Maui"
+             x:Class="GeoHeatmap.MapPage"
+             Title="Geo Heatmap">
+    <Grid>
+        <maps:Map x:Name="TheMap" IsShowingUser="True" MapType="Street" />
+
+        <skia:SKCanvasView x:Name="HeatCanvas"
+                           InputTransparent="True"
+                           PaintSurface="OnPaintSurface" />
+
+        <VerticalStackLayout Spacing="8"
+                              Padding="12"
+                              HorizontalOptions="End"
+                              VerticalOptions="End">
+            <Button Text="Toggle Tracking"
+                    Command="{Binding ToggleTrackingCommand}" />
+            <Button Text="Refresh Heatmap"
+                    Command="{Binding RefreshHeatmapCommand}" />
+            <Button Text="Clear Data"
+                    Command="{Binding ClearDataCommand}" />
+            <Label Text="Samples: {Binding SamplesCount}" />
+            <Label Text="Last fix (UTC): {Binding LastFixTimeUtc}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
