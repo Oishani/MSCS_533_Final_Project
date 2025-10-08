@@ -28,8 +28,11 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.akshat.GeoHeatmap</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Your location is used to generate a heat map.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Needed to track location for the heat map.</string></dict>
+	<string>Needed to track location for the heat map.</string>
+</dict>
 </plist>

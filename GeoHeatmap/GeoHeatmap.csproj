@@ -8,19 +8,19 @@
     <SingleProject>true</SingleProject>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <!-- Cross-platform app identifier (satisfies iOS bundle id & Android app id) -->
+    <ApplicationId>com.akshat.GeoHeatmap</ApplicationId>
+    <ApplicationTitle>GeoHeatmap</ApplicationTitle>
   </PropertyGroup>
 
+  <!-- Explicit MAUI packages are required with .NET 8 -->
   <ItemGroup>
-    <PackageReference Include="sqlite-net-pcl" Version="1.9.173" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.100" />
+    <PackageReference Include="Microsoft.Maui.Controls.Maps" Version="8.0.100" />
+
+    <!-- Let NuGet pick the latest stable available -->
+    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
     <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.6" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <MauiXaml Include="Views/MapPage.xaml" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-ios'">
-    <ImageAsset Include="Resources/Images/*" />
   </ItemGroup>
 </Project>

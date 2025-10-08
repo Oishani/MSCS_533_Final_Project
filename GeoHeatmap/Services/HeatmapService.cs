@@ -1,5 +1,7 @@
 using GeoHeatmap.Models;
 using Microsoft.Maui.Controls.Maps;
+using Microsoft.Maui.Devices.Sensors;
+using Microsoft.Maui.Maps;
 using SkiaSharp;
 
 namespace GeoHeatmap;
@@ -8,7 +10,7 @@ public class HeatmapService
 {
     // Projects lat/long to screen coordinates using an equirectangular approximation
     // good enough for small visible regions.
-    public (float x, float y) ProjectToScreen(Position topLeft, Position bottomRight, double lat, double lon, int width, int height)
+    public (float x, float y) ProjectToScreen(Location topLeft, Location bottomRight, double lat, double lon, int width, int height)
     {
         var lonSpan = bottomRight.Longitude - topLeft.Longitude;
         var latSpan = topLeft.Latitude - bottomRight.Latitude;
@@ -20,14 +22,14 @@ public class HeatmapService
     }
 
     public void DrawHeat(SKCanvas canvas, SKImageInfo info, IEnumerable<LocationSample> samples,
-                         MapSpan? visibleSpan, float radiusPx = 24f, float blurPx = 18f)
+                         Microsoft.Maui.Maps.MapSpan visibleSpan, float radiusPx = 24f, float blurPx = 18f)
     {
-        if (visibleSpan == null) return;
-        var mapSpan = visibleSpan.Value;
+        
+        var mapSpan = visibleSpan;
         var halfLat = mapSpan.LatitudeDegrees / 2.0;
         var halfLon = mapSpan.LongitudeDegrees / 2.0;
-        var topLeft = new Position(mapSpan.Center.Latitude + halfLat, mapSpan.Center.Longitude - halfLon);
-        var bottomRight = new Position(mapSpan.Center.Latitude - halfLat, mapSpan.Center.Longitude + halfLon);
+        var topLeft = new Location(mapSpan.Center.Latitude + halfLat, mapSpan.Center.Longitude - halfLon);
+        var bottomRight = new Location(mapSpan.Center.Latitude - halfLat, mapSpan.Center.Longitude + halfLon);
 
         using var blurPaint = new SKPaint
         {

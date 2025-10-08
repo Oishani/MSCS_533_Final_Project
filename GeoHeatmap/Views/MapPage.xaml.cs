@@ -1,6 +1,7 @@
 using GeoHeatmap.Models;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Maps;
+using Microsoft.Maui.Maps;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
 using SkiaSharp.Views.Maui.Controls;
@@ -23,7 +24,7 @@ public partial class MapPage : ContentPage
         // Redraw when the map region changes (pan/zoom)
         TheMap.PropertyChanged += (s, e) =>
         {
-            if (e.PropertyName == nameof(Map.VisibleRegion))
+            if (e.PropertyName == nameof(Microsoft.Maui.Controls.Maps.Map.VisibleRegion))
                 HeatCanvas.InvalidateSurface();
         };
     }
@@ -58,6 +59,6 @@ public partial class MapPage : ContentPage
         var span = TheMap.VisibleRegion;
         if (span == null) return;
 
-        _heat.DrawHeat(canvas, info, _vm.CachedSamples, span, radiusPx: 26f, blurPx: 20f);
+        _heat.DrawHeat(canvas, info, _vm.CachedSamples, span!, radiusPx: 26f, blurPx: 20f);
     }
 }
