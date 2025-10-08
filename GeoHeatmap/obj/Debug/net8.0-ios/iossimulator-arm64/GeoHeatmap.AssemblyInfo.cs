@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GeoHeatmap")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bb96e3572328249079b84fa46f3fcc013253652d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8e755be1e9aee964a3617d1cb565f6f2e310f235")]
 [assembly: System.Reflection.AssemblyProductAttribute("GeoHeatmap")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GeoHeatmap")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
