@@ -22,7 +22,7 @@ public class HeatmapService
     }
 
     public void DrawHeat(SKCanvas canvas, SKImageInfo info, IEnumerable<LocationSample> samples,
-                         Microsoft.Maui.Maps.MapSpan visibleSpan, float radiusPx = 24f, float blurPx = 18f)
+                         Microsoft.Maui.Maps.MapSpan visibleSpan, float radiusPx = 36f, float blurPx = 24f)
     {
         var mapSpan = visibleSpan;
         var halfLat = mapSpan.LatitudeDegrees / 2.0;
@@ -30,7 +30,8 @@ public class HeatmapService
         var topLeft = new Location(mapSpan.Center.Latitude + halfLat, mapSpan.Center.Longitude - halfLon);
         var bottomRight = new Location(mapSpan.Center.Latitude - halfLat, mapSpan.Center.Longitude + halfLon);
 
-        using var blurPaint = new SKPaint
+        // --- heat accumulation layer ---
+        using var heatPaint = new SKPaint
         {
             IsAntialias = true,
             ImageFilter = SKImageFilter.CreateBlur(blurPx, blurPx),
@@ -44,9 +45,19 @@ public class HeatmapService
             if (s.Longitude < topLeft.Longitude || s.Longitude > bottomRight.Longitude) continue;
 
             var (x, y) = ProjectToScreen(topLeft, bottomRight, s.Latitude, s.Longitude, info.Width, info.Height);
-            // stronger alpha so a few points are obvious
-            blurPaint.Color = new SKColor(255, 0, 0, 96);
-            canvas.DrawCircle(x, y, radiusPx, blurPaint);
+            heatPaint.Color = new SKColor(255, 0, 0, 96); // visible heat
+            canvas.DrawCircle(x, y, radiusPx, heatPaint);
+        }
+
+        using var dotPaint = new SKPaint { IsAntialias = true, Color = new SKColor(33, 150, 243, 230) }; // blue 600-ish
+        const float dotRadius = 4.5f;
+        foreach (var s in samples)
+        {
+            if (s.Latitude > topLeft.Latitude || s.Latitude < bottomRight.Latitude) continue;
+            if (s.Longitude < topLeft.Longitude || s.Longitude > bottomRight.Longitude) continue;
+
+            var (x, y) = ProjectToScreen(topLeft, bottomRight, s.Latitude, s.Longitude, info.Width, info.Height);
+            canvas.DrawCircle(x, y, dotRadius, dotPaint);
         }
     }
 }

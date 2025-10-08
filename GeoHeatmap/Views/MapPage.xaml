@@ -4,12 +4,13 @@
              xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
              xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
              x:Class="GeoHeatmap.MapPage"
-             Title="Geo Heatmap">
+             Title="MainView">
     <Grid>
         <maps:Map x:Name="TheMap"
                   IsShowingUser="True"
                   MapType="Street" />
 
+        <!-- Heatmap + dots overlay-->
         <skia:SKCanvasView x:Name="HeatCanvas"
                            Grid.ZIndex="1"
                            InputTransparent="True"
