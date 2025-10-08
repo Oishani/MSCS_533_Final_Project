@@ -24,7 +24,6 @@ public class HeatmapService
     public void DrawHeat(SKCanvas canvas, SKImageInfo info, IEnumerable<LocationSample> samples,
                          Microsoft.Maui.Maps.MapSpan visibleSpan, float radiusPx = 24f, float blurPx = 18f)
     {
-        
         var mapSpan = visibleSpan;
         var halfLat = mapSpan.LatitudeDegrees / 2.0;
         var halfLon = mapSpan.LongitudeDegrees / 2.0;
@@ -45,8 +44,8 @@ public class HeatmapService
             if (s.Longitude < topLeft.Longitude || s.Longitude > bottomRight.Longitude) continue;
 
             var (x, y) = ProjectToScreen(topLeft, bottomRight, s.Latitude, s.Longitude, info.Width, info.Height);
-            // low alpha; accumulation = intensity
-            blurPaint.Color = new SKColor(255, 0, 0, 18);
+            // stronger alpha so a few points are obvious
+            blurPaint.Color = new SKColor(255, 0, 0, 96);
             canvas.DrawCircle(x, y, radiusPx, blurPaint);
         }
     }

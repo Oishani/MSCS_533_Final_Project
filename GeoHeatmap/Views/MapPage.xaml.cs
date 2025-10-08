@@ -34,6 +34,7 @@ public partial class MapPage : ContentPage
         base.OnAppearing();
         await _vm.InitializeAsync();
         await CenterOnUserAsync();
+        HeatCanvas.InvalidateSurface(); // ensure first paint
     }
 
     private async Task CenterOnUserAsync()
@@ -44,7 +45,8 @@ public partial class MapPage : ContentPage
             if (loc != null)
             {
                 var position = new Location(loc.Latitude, loc.Longitude);
-                TheMap.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(1.2)));
+                // Start zoomed out a bit so you can see context & blobs without pinch-out
+                TheMap.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromKilometers(5)));
             }
         }
         catch { /* ignore for simulator */ }
@@ -59,6 +61,9 @@ public partial class MapPage : ContentPage
         var span = TheMap.VisibleRegion;
         if (span == null) return;
 
-        _heat.DrawHeat(canvas, info, _vm.CachedSamples, span!, radiusPx: 26f, blurPx: 20f);
+        // use larger radius & blur so it's obvious
+        _heat.DrawHeat(canvas, info, _vm.CachedSamples, span, radiusPx: 36f, blurPx: 24f);
+
+        System.Diagnostics.Debug.WriteLine($"PaintSurface: samples={_vm.CachedSamples.Count}");
     }
 }

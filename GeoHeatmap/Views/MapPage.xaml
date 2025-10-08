@@ -6,9 +6,12 @@
              x:Class="GeoHeatmap.MapPage"
              Title="Geo Heatmap">
     <Grid>
-        <maps:Map x:Name="TheMap" IsShowingUser="True" MapType="Street" />
+        <maps:Map x:Name="TheMap"
+                  IsShowingUser="True"
+                  MapType="Street" />
 
         <skia:SKCanvasView x:Name="HeatCanvas"
+                           Grid.ZIndex="1"
                            InputTransparent="True"
                            PaintSurface="OnPaintSurface" />
 
@@ -22,8 +25,17 @@
                     Command="{Binding RefreshHeatmapCommand}" />
             <Button Text="Clear Data"
                     Command="{Binding ClearDataCommand}" />
-            <Label Text="Samples: {Binding SamplesCount}" />
-            <Label Text="Last fix (UTC): {Binding LastFixTimeUtc}" />
+
+            <!-- Formatted labels so bindings render correctly -->
+            <Label>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Samples: " />
+                        <Span Text="{Binding SamplesCount}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label Text="{Binding LastFixTimeUtc, StringFormat='Last fix (UTC): {0:HH:mm:ss}'}" />
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

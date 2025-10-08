@@ -40,7 +40,9 @@ public partial class MapViewModel : ObservableObject
         {
             if (!await _loc.EnsurePermissionAsync())
             {
-                await Shell.Current.DisplayAlert("Permission", "Location permission is required.", "OK");
+                var page = Application.Current?.MainPage;
+                if (page != null)
+                    await page.DisplayAlert("Permission", "Location permission is required.", "OK");
                 return;
             }
             IsTracking = true;
@@ -74,7 +76,7 @@ public partial class MapViewModel : ObservableObject
                 LastFixTimeUtc = sample.TimestampUtc;
                 MainThread.BeginInvokeOnMainThread(() => SamplesChanged?.Invoke());
             }
-            await Task.Delay(TimeSpan.FromSeconds(15), ct);
+            await Task.Delay(TimeSpan.FromSeconds(5), ct);
         }
     }
 
